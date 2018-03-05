@@ -10,8 +10,8 @@
                              SECTIONS                            
 
  1. HEADER METADATA                                            
- 	- Check @article-type EXISTS on the <article> 
- 	- Check VALUE of @article-type is among confirmed values 
+	- Check @article-type EXISTS on the <article> 
+	- Check VALUE of @article-type is among confirmed values 
 
  2. JOURNAL METADATA                                           
  	- Check <journal-id> EXISTS
@@ -34,13 +34,13 @@
  3. ARTICLE METADATA                                           
  	- Check NUMBER of <article-id> is correct and holds the correct VALUE
  	- Check that the VALUE of @pub-id-type is correct on <article-id>
-    - Check <article-id> is formatted correctly
+	- Check <article-id> is formatted correctly
  	- Check <article-title> EXISTS
  	- Check <subtitle> DOES NOT EXIST
  	- Check <pub-date> EXISTS
  	- Check VALUE of @pub-type is correct on e-only journals
-    - Check 1 <pub-date> element on e-only journals 
-    - Check 2 <pub-date> elements on print/online journals 
+	- Check 1 <pub-date> element on e-only journals 
+	- Check 2 <pub-date> elements on print/online journals 
  	- Check <month> is not a string and that it's formatted correctly
  	- Check <volume> DOES NOT EXIST on Just Accepted articles
  	- Check <volume> DOES NOT EXIST on Ahead of Print articles
@@ -60,15 +60,15 @@
  	
  4. CONTRIBUTORS                                               
  	- Check that the <contributor> uses <string-name>, not <name>
-    - Check VALUE <contrib-type>
-    - Check VALUE of <contrib-id>
-    - Check affiliations not tagged as <xref>
-    - Check VALUE of @ref-type on <xref>
-    - Check corresponding author (Part 1)
-    - Check corresponding author (Part 2)
-    - Check @id EXISTS on <corresp>
-    - Check VALUE of <corresp>
-    - Check VALUE of @id on <corresp>
+	- Check VALUE <contrib-type>
+	- Check VALUE of <contrib-id>
+	- Check affiliations not tagged as <xref>
+	- Check VALUE of @ref-type on <xref>
+	- Check corresponding author (Part 1)
+	- Check corresponding author (Part 2)
+	- Check @id EXISTS on <corresp>
+	- Check VALUE of <corresp>
+	- Check VALUE of @id on <corresp>
 
 
  5. BOOK REVIEWS           
@@ -76,19 +76,19 @@
  	- If a book review includes <article-title>, the title should not be the same as <source> (** NOT WORKING **)
 
  6. FUNDREF INFORMATION                                        
-    - ALERT user to empty <award-id>  
-    - ALERT user to empty <institution> 
-    - ALERT user empty <institution-id> 
+	- ALERT user to empty <award-id>  
+	- ALERT user to empty <institution> 
+	- ALERT user empty <institution-id> 
 
  7. REFERENCES                                        
-    - Check @publication-type EXISTS on <mixed-citation>
-    - Check VALUE of @publication-type
+	- Check @publication-type EXISTS on <mixed-citation>
+	- Check VALUE of @publication-type
     
  8. FIGURES                                        
-    - 
+	- 
     
  9. TABLES                                        
-    - Check tables are HTML, not OASIS
+	- Check tables are HTML, not OASIS
  ============================================================= 
 
  ============================================================= 
