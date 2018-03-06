@@ -34,18 +34,16 @@
  3. ARTICLE METADATA                                           
  	- Check NUMBER of <article-id> is correct and holds the correct VALUE
  	- Check that the VALUE of @pub-id-type is correct on <article-id>
-	- Check <article-id> is formatted correctly
+    	- Check <article-id> is formatted correctly
  	- Check <article-title> EXISTS
  	- Check <subtitle> DOES NOT EXIST
  	- Check <pub-date> EXISTS
  	- Check VALUE of @pub-type is correct on e-only journals
-	- Check 1 <pub-date> element on e-only journals 
-	- Check 2 <pub-date> elements on print/online journals 
+    	- Check 1 <pub-date> element on e-only journals 
+    	- Check 2 <pub-date> elements on print/online journals 
  	- Check <month> is not a string and that it's formatted correctly
- 	- Check <volume> DOES NOT EXIST on Just Accepted articles
- 	- Check <volume> DOES NOT EXIST on Ahead of Print articles
- 	- Check <issue> DOES NOT EXIST on Just Accepted articles
- 	- Check <issue> DOES NOT EXIST on Ahead of Print articles
+ 	- Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles
+ 	- Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles
  	- Check <copyright-statement> EXISTS
  	- Check <copyright-holder> EXISTS
  	- Check <copyright-year> EXISTS
@@ -60,15 +58,15 @@
  	
  4. CONTRIBUTORS                                               
  	- Check that the <contributor> uses <string-name>, not <name>
-	- Check VALUE <contrib-type>
-	- Check VALUE of <contrib-id>
-	- Check affiliations not tagged as <xref>
-	- Check VALUE of @ref-type on <xref>
-	- Check corresponding author (Part 1)
-	- Check corresponding author (Part 2)
-	- Check @id EXISTS on <corresp>
-	- Check VALUE of <corresp>
-	- Check VALUE of @id on <corresp>
+    	- Check VALUE <contrib-type>
+    	- Check VALUE of <contrib-id>
+    	- Check affiliations not tagged as <xref>
+    	- Check VALUE of @ref-type on <xref>
+ - Check corresponding author (Part 1)
+    	- Check corresponding author (Part 2)
+    	- Check @id EXISTS on <corresp>
+    	- Check VALUE of <corresp>
+    	- Check VALUE of @id on <corresp>
 
 
  5. BOOK REVIEWS           
@@ -216,9 +214,9 @@
                 . = 'ntls' and /article/front/journal-meta/journal-title-group/journal-title = 'Nautilus' or
                 . = 'octo' and /article/front/journal-meta/journal-title-group/journal-title = 'October' or
                 . = 'opmi' and /article/front/journal-meta/journal-title-group/journal-title = 'Open Mind' or
-                . = 'pajj' and /article/front/journal-meta/journal-title-group/journal-title = 'Performing Arts Journal' or
+                . = 'pajj' and /article/front/journal-meta/journal-title-group/journal-title = 'PAJ: A Journal of Performance and Art' or
                 . = 'posc' and /article/front/journal-meta/journal-title-group/journal-title = 'Perspectives on Science' or
-                . = 'pres' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Teleoperators and Virtual Environments' or
+                . = 'pres' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Teleoperators and Virtual Environments' or 
                 . = 'rest' and /article/front/journal-meta/journal-title-group/journal-title = 'Review of Economics and Statistics' or
                 . = 'thld' and /article/front/journal-meta/journal-title-group/journal-title = 'Thresholds' or
                 . = 'tneq' and /article/front/journal-meta/journal-title-group/journal-title = 'The New England Quarterly'
@@ -415,32 +413,20 @@
     </pattern>
     
     <pattern>
-        <!-- Check <volume> DOES NOT EXIST on Just Accepted articles -->
+        <!-- Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/volume">
-            <assert test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <volume> element from Just Accepted articles]]></assert>
+            <assert test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <volume> element from Just Accepted articles. For non JA and EA content, format as <volume>01</volume>]]></assert>
         </rule>
     </pattern>
     
-    <pattern>
-        <!-- Check <volume> DOES NOT EXIST on Ahead of Print articles -->
-        <rule context="/article/front/article-meta/volume">
-            <report test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <volume> element from Ahead of Print articles]]></report>
-        </rule>
-    </pattern>
     
     <pattern>
-        <!-- Check <issue> DOES NOT EXIST on Just Accepted articles -->
+        <!-- Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/issue">
-            <report test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <issue> element from Just Accepted articles]]></report>
+            <assert test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <issue> element from Just Accepted articles. For non JA and EA content, format as <issue>01</issue>]]></assert>
         </rule>
     </pattern>
-    
-    <pattern>
-        <!-- Check <issue> DOES NOT EXIST on Ahead of Print articles -->
-        <rule context="/article/front/article-meta/issue">
-            <report test="matches(.,'[0-9]{2}') and not(. = '0')  and not(. = '00')"><![CDATA[Omit <issue> element from Ahead of Print articles]]></report>
-        </rule>
-    </pattern>
+
 
     <pattern>
         <!-- Check <copyright-statement> EXISTS -->
