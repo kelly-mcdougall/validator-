@@ -10,83 +10,88 @@
                              SECTIONS                            
 
  1. HEADER METADATA                                            
-	- Check @article-type EXISTS on the <article> 
-	- Check VALUE of @article-type is among confirmed values 
+    - Check @article-type EXISTS on the <article>
+    - Check VALUE of @article-type is among confirmed values
 
- 2. JOURNAL METADATA                                           
- 	- Check <journal-id> EXISTS
- 	- Check VALUE of <journal-id> element is among confirmed values 
- 	- Check VALUE of <journal-id> matches VALUE of <journal-title> 
- 	- Check <issn> EXISTS and appears in the correct number 
- 	- Check <journal-title> EXISTS
- 	- Check <abbrev-journal-title> EXISTS
- 	- Check @abbrev-type EXISTS on <abbrev-journal-title>
- 	- Check VALUE of @abbrev-type 
- 	- Check <publisher-name> EXISTS
- 	- Check VALUE of <publisher-name>
- 	- Check <addr-line> EXISTS
- 	- Check VALUE of <addr-line>
- 	- Check <country> EXISTS
- 	- Check VALUE of <country>
- 	- Check <email> EXISTS
- 	- Check VALUE of <email>
+ 2. JOURNAL METADATA
+    - Check <journal-id> EXISTS
+    - Check VALUE of <journal-id> element is among confirmed values
+    - Check VALUE of <journal-id> matches VALUE of <journal-title>
+    - Check <issn> EXISTS and appears in the correct number
+    - Check <journal-title> EXISTS
+    - Check <abbrev-journal-title> EXISTS
+    - Check @abbrev-type EXISTS on <abbrev-journal-title>
+    - Check VALUE of @abbrev-type
+    - Check <publisher-name> EXISTS
+    - Check VALUE of <publisher-name>
+    - Check <addr-line> EXISTS
+    - Check VALUE of <addr-line>
+    - Check <country> EXISTS
+    - Check VALUE of <country>
+    - Check <email> EXISTS
+    - Check VALUE of <email>
 
- 3. ARTICLE METADATA                                           
- 	- Check NUMBER of <article-id> is correct and holds the correct VALUE
- 	- Check that the VALUE of @pub-id-type is correct on <article-id>
-    	- Check <article-id> is formatted correctly
- 	- Check <article-title> EXISTS
- 	- Check <subtitle> DOES NOT EXIST
- 	- Check <pub-date> EXISTS
- 	- Check VALUE of @pub-type is correct on e-only journals
-    	- Check 1 <pub-date> element on e-only journals 
-    	- Check 2 <pub-date> elements on print/online journals 
- 	- Check <month> is not a string and that it's formatted correctly
- 	- Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles
- 	- Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles
- 	- Check <copyright-statement> EXISTS
- 	- Check <copyright-holder> EXISTS
- 	- Check <copyright-year> EXISTS
- 	- Check <license> and <license-p> EXIST (OA only)
- 	- Check VALUE of @license-type @xlink:href on <license> (OA only)
- 	- Check VALUE of <license> (OA only)
- 	- Check VALUE of <copyright-statement> (OA only) 
- 	- Check <self-uri> EXISTS
- 	- Check <abstract> DOES NOT contain <title>
- 	- Check <kwd> are separated by <x>, <x>
- 	- Check <heading> DOES NOT EXIST
+ 3. ARTICLE METADATA                               
+    - Check NUMBER of <article-id> is correct and holds the correct VALUE
+    - Check that the VALUE of @pub-id-type is correct on <article-id>
+    - Check <article-id> is formatted correctly
+    - Check <article-title> EXISTS
+    - Check <subtitle> DOES NOT EXIST
+    - Check <pub-date> EXISTS
+    - Check VALUE of @pub-type is correct on e-only journals
+    - Check 1 <pub-date> element on e-only journals
+    - Check 2 <pub-date> elements on print/online journals
+    - Check <month> is not a string and that it's formatted correctly
+    - Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles
+    - Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles
+    - Check <copyright-statement> EXISTS
+    - Check <copyright-holder> EXISTS
+    - Check <copyright-year> EXISTS
+    - Check <license> and <license-p> EXIST (OA only)
+    - Check VALUE of @license-type @xlink:href on <license> (OA only)
+    - Check VALUE of <license> (OA only)
+    - Check VALUE of <copyright-holder> (OA only: NETN, CPSY, OIPMI)
+    - Check VALUE of <copyright-holder> (OA only: COLI)
+    - Check VALUE of <copyright-holder> (OA only: ADEV)
+    - Check VALUE of <copyright-statement> (OA only: NETN, CPSY, OIPMI)
+    - Check VALUE of <copyright-statement> (OA only: COLI)
+    - Check VALUE of <copyright-statement> (OA only: ADEV)
+    - Check <self-uri> EXISTS
+    - Check <abstract> DOES NOT contain <title>
+    - Check <kwd> are separated by <x>, <x>
+    - Check <heading> DOES NOT EXIST
  	
- 4. CONTRIBUTORS                                               
- 	- Check that the <contributor> uses <string-name>, not <name>
-    	- Check VALUE <contrib-type>
-    	- Check VALUE of <contrib-id>
-    	- Check affiliations not tagged as <xref>
-    	- Check VALUE of @ref-type on <xref>
- - Check corresponding author (Part 1)
-    	- Check corresponding author (Part 2)
-    	- Check @id EXISTS on <corresp>
-    	- Check VALUE of <corresp>
-    	- Check VALUE of @id on <corresp>
+ 4. CONTRIBUTORS
+    - Check that the <contributor> uses <string-name>, not <name>
+    - Check VALUE <contrib-type>
+    - Check VALUE of <contrib-id>
+    - Check affiliations not tagged as <xref>
+    - Check VALUE of @ref-type on <xref>
+    - Check corresponding author (Part 1)
+    - Check corresponding author (Part 2)
+    - Check @id EXISTS on <corresp>
+    - Check VALUE of <corresp>
+    - Check VALUE of @id on <corresp>
 
 
- 5. BOOK REVIEWS           
- 	- Check that all book reviews contain a <product>
- 	- If a book review includes <article-title>, the title should not be the same as <source> (** NOT WORKING **)
+ 5. BOOK REVIEWS
+    - Check that all book reviews contain a <product>
+    - If a book review includes <article-title>, the title should not be the same as <source> (** NOT WORKING **)
 
- 6. FUNDREF INFORMATION                                        
-	- ALERT user to empty <award-id>  
-	- ALERT user to empty <institution> 
-	- ALERT user empty <institution-id> 
+ 6. FUNDREF INFORMATION
+    - ALERT user to empty <award-id>
+    - ALERT user to empty <institution>
+    - ALERT user empty <institution-id>
 
- 7. REFERENCES                                        
-	- Check @publication-type EXISTS on <mixed-citation>
-	- Check VALUE of @publication-type
+ 7. REFERENCES
+    - Check @publication-type EXISTS on <mixed-citation>
+    - Check VALUE of @publication-type
     
  8. FIGURES                                        
-	- 
+    - 
     
  9. TABLES                                        
-	- Check tables are HTML, not OASIS
+    - Check tables are HTML, not OASIS
  ============================================================= 
 
  ============================================================= 
@@ -247,7 +252,7 @@
     <pattern>
         <!-- Check <journal-title> EXISTS -->
         <rule context="/article/front/journal-meta/journal-title-group">
-            <assert id="err61" test="journal-title"><![CDATA[Missing <journal-title> element]]>
+            <assert id="err61" test="normalize-space(journal-title)"><![CDATA[Missing <journal-title> element]]>
             </assert>
         </rule>
     </pattern>
@@ -255,7 +260,7 @@
     <pattern>
         <!-- Check <abbrev-journal-title> EXISTS -->
         <rule context="/article/front/journal-meta/journal-title-group">
-            <assert id="err6" test="abbrev-journal-title"><![CDATA[Missing <abbrev-journal-title> element]]>
+            <assert id="err6" test="normalize-space(abbrev-journal-title)"><![CDATA[Missing <abbrev-journal-title> element]]>
             </assert>
         </rule>
 
@@ -281,7 +286,7 @@
 
         <!-- Check VALUE of <publisher-name> -->
         <rule context="/article/front/journal-meta/publisher/publisher-name">
-            <assert id="err10" test=". = 'MIT Press'">
+            <assert id="err10" test="normalize-space(.) = 'MIT Press'">
                 <![CDATA[The <publisher-name> must be 'MIT Press' ]]></assert>
         </rule>
     </pattern>
@@ -294,7 +299,7 @@
 
         <!-- Check VALUE of <addr-line> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc">
-            <assert id="err12" test="addr-line = 'One Rogers Street, Cambridge, MA 02142-1209'">
+            <assert id="err12" test="normalize-space(addr-line) = 'One Rogers Street, Cambridge, MA 02142-1209'">
                 <![CDATA[The <addr-line must> be 'One Rogers Street, Cambridge, MA 02142-1209']]></assert>
         </rule>
 
@@ -305,7 +310,7 @@
 
         <!-- Check VALUE of <country> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc/country">
-            <assert id="err14" test=". = 'USA'">
+            <assert id="err14" test="normalize-space(.) = 'USA'">
                 <![CDATA[The <country> must be 'USA' ]]></assert>
         </rule>
 
@@ -316,7 +321,7 @@
 
         <!-- Check VALUE of <email> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc/email">
-            <assert id="err16" test=". = 'journals-info&#x0040;mit.edu'">
+            <assert id="err16" test="normalize-space(.) = 'journals-info&#x0040;mit.edu'">
                 <![CDATA[The email must be 'journals-info&#x0040;mit.edu' ]]></assert>
             <assert id="err17" test="@xlink:href = 'mailto:journals-info@mit.edu'"><![CDATA[ The @xlink:href must be 'mailto:journals-info@mit.edu']]>
             </assert>
@@ -442,6 +447,7 @@
         </rule>
     </pattern>
     
+    
     <pattern>
         <!-- Check <copyright-year> EXISTS -->
         <rule context="/article/front/article-meta/permissions">
@@ -453,9 +459,9 @@
         <!-- Check <license> and <license-p> EXIST (OA only) -->
         <rule context="/article/front/article-meta/permissions">
             <assert id="err2f81" test="
-                ((/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi']) and license and license/license-p )
+                ((/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi' or journal-id= 'adev']) and license and license/license-p )
                 or 
-                not(/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi'])">
+                not(/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi' or journal-id= 'adev'])">
                 <![CDATA[This is an OA article and should include a <license> and <license-p> element]]></assert>
         </rule>
     </pattern>
@@ -464,30 +470,88 @@
         <!-- Check VALUE of @license-type @xlink:href on <license> (OA only) -->
         <rule context="/article/front/article-meta/permissions/license">
             <assert id="err2df81" test="@license-type='open-access' and @xlink:href='https://creativecommons.org/licenses/by/4.0/'">
-                <![CDATA[If this is an OA article, the <license> element should include '@license-type="open-access"' and '@xlink:href="http://creativecommons.org/licenses/by/4.0/". Note, it should not include @license-type="free-registered"']]></assert>
+                <![CDATA[If this is an OA article, the <license> element should include @license-type="open-access" and @xlink:href="https://creativecommons.org/licenses/by/4.0/". Note, it should not include @license-type="free-registered"']]></assert>
         </rule>
     </pattern>
     
     <!-- Check VALUE of <license> (OA only) -->
     <pattern>
         <rule context="/article/front/article-meta/permissions/license/license-p">
-            <assert test=". = 'This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.  For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.'">
-                <![CDATA[<license-p> element should read 'This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.  For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.' If this is not an OA article, omit <license> and <license-p>" ]]>
+            <assert test="normalize-space(.) = 'This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.'">
+                <![CDATA[<license-p> element should read 'This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.' If this is not an OA article, omit <license> and <license-p>" ]]>
             </assert>
         </rule>
     </pattern>
     
-    <!-- Check VALUE of <copyright-statement> (OA only)-->
+    <!-- Check VALUE of <copyright-holder> (OA only: NETN, CPSY, OPMI)-->
     <pattern>
         <rule context="/article/front/article-meta/permissions">
-            <assert test="
-                ((/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi'])
+            <report test="
+                ((/article/front/journal-meta[journal-id = 'netn' or journal-id= 'cpsy' or journal-id= 'opmi'])
                 and 
-                copyright-statement = '© 2018 Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')
-                or 
-                not(/article/front/journal-meta[journal-id = 'netn' or journal-id= 'coli' or journal-id= 'cpsy' or journal-id= 'opmi'])">
-                <![CDATA[This is an OA article, the copyright-statement should be "© 2018 Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
-            </assert>
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                <![CDATA[<Copyright-holder> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <!-- Check VALUE of <copyright-holder> (OA only: COLI)-->
+    <pattern>
+        <rule context="/article/front/article-meta/permissions">
+            <report test="
+                ((/article/front/journal-meta/journal-id = 'coli')
+                and 
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
+                <![CDATA[<copyright-holder> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <!-- Check VALUE of <copyright-holder> (OA only:ADEV)-->
+    <pattern>
+        <rule context="/article/front/article-meta/permissions">
+            <report test="
+                ((/article/front/journal-meta/journal-id = 'adev')
+                and 
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Asian Development Bank and Asian Development Bank Institute')))">
+                <![CDATA[<copyright-holder> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "Asian Development Bank and Asian Development Bank Institute" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <!-- Check VALUE of <copyright-statement> (OA only: NETN, CPSY, OPMI)-->
+    <pattern>
+        <rule context="/article/front/article-meta/permissions">
+            <report test="
+                ((/article/front/journal-meta[journal-id = 'netn' or journal-id= 'cpsy' or journal-id= 'opmi'])
+                and 
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                <![CDATA[<copyright-statement> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "© [copyright year] Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <!-- Check VALUE of <copyright-statement> (OA only: COLI)-->
+    <pattern>
+        <rule context="/article/front/article-meta/permissions">
+            <report test="
+                ((/article/front/journal-meta/journal-id = 'coli')
+                and 
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
+                <![CDATA[<copyright-statement> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "© [copyright year] Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <!-- Check VALUE of <copyright-statement> (OA only:ADEV)-->
+    <pattern>
+        <rule context="/article/front/article-meta/permissions">
+            <report test="
+                ((/article/front/journal-meta/journal-id = 'adev')
+                and 
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Asian Development Bank and Asian Development Bank Institute')))">
+                <![CDATA[<copyright-statement> for]]> <value-of select='/article/front/journal-meta/journal-title-group/journal-title'/> <![CDATA[ should be "© [copyright year] Asian Development Bank and Asian Development Bank Institute" ]]>
+            </report>
         </rule>
     </pattern>
     
@@ -655,9 +719,18 @@
         <rule context="/article/back/ref-list/ref/mixed-citation">
             <assert id="err2fe5" test="
                 @publication-type = 'book' or @publication-type = 'confproc' or 
-                @publication-type = 'ejournal' or @publication-type = 'paper' or 
-                @publication-type = 'report' or @publication-type = 'thesis'
-                "><![CDATA[Unrecognized @publication-type on <mixed-citation>. Value should be one of the following: 'book', 'confproc', 'ejournal', 'paper', 'report', 'thesis']]></assert> 
+                @publication-type = 'journal' or @publication-type = 'paper' or 
+                @publication-type = 'report' or @publication-type = 'thesis' or
+                @publication-type = 'letter' or @publication-type = 'review' or
+                @publication-type = 'patent' or @publication-type = 'standard' or
+                @publication-type = 'data' or @publication-type = 'working-paper' or
+                @publication-type = 'other'
+                
+                "><![CDATA[Unrecognized @publication-type on <mixed-citation>. Value should be one of the following:
+                'book', 'confproc', 'journal', 'paper', 'report', 
+                'thesis', 'letter', 'review', 'patent', 'standard', 
+                'data', or 'working-paper'. Please do not use 'other'. 
+                If you need a new @publication-type added, please email journals-tech@mit.edu so it can be added to the guidlines.  ]]></assert> 
         </rule> 
     </pattern> 
     
