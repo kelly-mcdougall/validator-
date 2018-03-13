@@ -35,7 +35,7 @@
     - Check NUMBER of <article-id> is correct and holds the correct VALUE
     - Check that the VALUE of @pub-id-type is correct on <article-id>
     - Check <article-id> is formatted correctly
-    - Check <article-title> EXISTS
+    - Check <title-group> EXISTS
     - Check <subtitle> DOES NOT EXIST
     - Check <pub-date> EXISTS
     - Check VALUE of @pub-type is correct on e-only journals
@@ -76,8 +76,9 @@
 
  5. BOOK REVIEWS
     - Check that all book reviews contain a <product>
+    - Check that if a <product> element exists, the article type is book-review
     - Check <source> exists inside <product>
-    - If a book review includes <article-title>, the title should not be the same as <source> (** NOT WORKING **)
+    - If a book review includes <article-title>, the title should not be the same as <source>
 
  6. FUNDREF INFORMATION
     - ALERT user to empty <award-id>
@@ -329,8 +330,8 @@
     </pattern>
     <pattern>
         <!-- Check VALUE of <email> -->
-        <rule context="/article/front/journal-meta/publisher/publisher-loc">
-            <assert id="err16" test="normalize-space(email) = 'journals-info&#x0040;mit.edu'">
+        <rule context="/article/front/journal-meta/publisher/publisher-loc/email">
+            <assert id="err16" test="normalize-space(.) = 'journals-info&#x0040;mit.edu'">
                 <![CDATA[The email must be 'journals-info&#x0040;mit.edu' ]]></assert>
             <assert id="err17" test="@xlink:href = 'mailto:journals-info@mit.edu'"><![CDATA[ The @xlink:href must be 'mailto:journals-info@mit.edu']]>
             </assert>
@@ -361,9 +362,9 @@
     </pattern>
 
     <pattern>
-        <!-- <article-title> EXISTS -->
+        <!-- <title-group> EXISTS -->
         <rule context="/article/front/article-meta/title-group">
-            <report id="err21" test="not(@article-type = 'book-review') and not(article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. ]]></report>
+            <report id="err2x1" test="not(@article-type = 'book-review') and not(article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. ]]></report>
         </rule>
     </pattern>
 
@@ -433,7 +434,7 @@
     <pattern>
         <!-- Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/volume">
-            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"><![CDATA[Omit <volume> element from Just Accepted articles.  If this isn't Early Access, it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>)]]></assert>
+            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"><![CDATA[Omit <volume> element from Just Accepted and Early Access articles. If this isn't JA or EA it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>)]]></assert>
         </rule>
     </pattern>
 
@@ -441,7 +442,7 @@
     <pattern>
         <!-- Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/issue">
-            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"><![CDATA[Omit <issue> element from Just Accepted articles. If this isn't Just Accepted, it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>)]]></assert>
+            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"><![CDATA[Omit <issue> element from Just Accepted and Early Access articles. If this isn't JA or EA it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>)]]></assert>
         </rule>
     </pattern>
 
@@ -597,14 +598,16 @@
     <!-- Check <kwd> are seperated by <x>, <x> -->
     <pattern>
         <rule context="/article/front/article-meta/kwd-group">
-            <assert id="err31" test="x"><![CDATA[<keywords should be formatted with <x>, <x> (<kwd>...</kwd><x>, </x>) ]]></assert>
+            <let name="kwd_count" value="count(kwd)"/>
+            <let name="x_count" value="count(x)"/>
+            <report id="err31" test="not($kwd_count = ($x_count + 1))"><![CDATA[<keywords should be formatted with <x>, <x> (<kwd>...</kwd><x>, </x>) ]]></report>
         </rule>
     </pattern>
 
     <!-- Check <heading> DOES NOT EXIST -->
     <pattern>
         <rule context="/article/front/article-meta/article-categories/subj-group">
-            <report id="err312" test="subject"><![CDATA[This article includes a <heading> element, but headings should be included in the issue xml file.]]></report>
+            <report id="err312" test="subject"><![CDATA[This article includes a subject element inside article-categories/subj-group, but subject (used for TOC category heads) should be included in the issue xml file.]]></report>
         </rule>
     </pattern>
 
@@ -699,23 +702,23 @@
     </pattern>
     
     <pattern>
-        <!-- Check <source> exists inside <product> -->
-        <rule context="/article/front/article-meta/product">
-            <assert test="source"><![CDATA[<product> element found without <source>. The title of the item being reviewed should be placed inside <source> within the <product> element.]]></assert>
+        <!-- Check that if a <product> element exists, the article type is book-review -->
+        <rule context="/article/front/article-meta">
+            <report test="not(/article/@article-type = 'book-review') and (product)"><![CDATA[<product> element is found, but the article type is not book-review. Only a book-review should have a <product> element. ]]></report>
         </rule>
     </pattern>
     
     <pattern>
-        <!-- Check that all book reviews contain a <product> -->
-        <rule context="/article">
-            <report test="@article-type = 'book-review' and not(//product)"><![CDATA[@article-type='book-review' found but missing <product> element. If this is a book review, the product information should be included in <product> element.]]></report>
+        <!-- Check <source> exists inside <product> -->
+        <rule context="/article/front/article-meta/product">
+            <assert test="source"><![CDATA[<product> element found without <source>. The title of the item being reviewed should be placed inside <source> within the <product> element.]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- If a book review includes <article-title>, the title should not be the same as <source> -->
         <rule context="/article/front/article-meta/title-group/article-title">
-            <report test=". = /article/front/article-meta/product/source">
+            <report test="normalize-space(.) = normalize-space(/article/front/article-meta/product/source)">
                 <![CDATA[<article-title> same as <source> in <product>. Either remove <article-title> or include a unique <article-title>.]]></report>
         </rule>
     </pattern>
