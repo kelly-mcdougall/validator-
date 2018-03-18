@@ -44,6 +44,7 @@
     - Check <month> is not a string and that it's formatted correctly
     - Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles
     - Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles
+    - Check <permissions> EXISTS
     - Check <copyright-statement> EXISTS
     - Check <copyright-holder> EXISTS
     - Check <copyright-year> EXISTS
@@ -57,6 +58,8 @@
     - Check VALUE of <copyright-statement> (OA only: COLI)
     - Check VALUE of <copyright-statement> (OA only: ADEV)
     - Check <self-uri> EXISTS
+    - Check VALUE of @xlink:href on <self-uri>
+    - Check VALUE of @xlink:href on <related-article> does not point to self
     - Check <abstract> DOES NOT contain <title>
     - Check <kwd> are separated by <x>, <x>
     - Check <heading> DOES NOT EXIST
@@ -67,6 +70,7 @@
     - Check VALUE of <contrib-id>
     - Check affiliations not tagged as <xref>
     - Check VALUE of @ref-type on <xref>
+    - Check VALUE of <aff> is not too long
     - Check corresponding author (Part 1)
     - Check corresponding author (Part 2)
     - Check @id EXISTS on <corresp>
@@ -120,14 +124,14 @@
     <!-- Check @article-type EXISTS on the <article> element -->
     <pattern>
         <rule context="/article">
-            <assert id="err1" test="@article-type"><![CDATA[The article element must have an article-type attribute]]></assert>
+            <assert test="@article-type"><![CDATA[The article element must have an article-type attribute]]></assert>
         </rule>
     </pattern>
 
     <!-- Check VALUE of @article-type is among confirmed values -->
     <pattern>
         <rule context="/article">
-            <assert id="err2" test="
+            <assert test="
                     @article-type = 'abstract' or @article-type = 'addendum' or @article-type = 'announcement' or
                     @article-type = 'article-commentary' or @article-type = 'back-matter' or @article-type = 'bibliography' or
                     @article-type = 'book-review' or @article-type = 'books-received' or @article-type = 'brief-report' or
@@ -160,17 +164,17 @@
     <pattern>
         <!-- Check <journal-id> EXISTS -->
         <rule context="/article/front/journal-meta">
-            <assert test="journal-id" id="err3"><![CDATA[Missing journal-id element inside journal-meta]]></assert>
+            <assert test="journal-id"><![CDATA[Missing journal-id element inside journal-meta]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check VALUE of <journal-id> element is among confirmed values -->
         <rule context="/article/front/journal-meta/journal-id">
-            <assert id="err4" test="
+            <assert test="
                     . = 'adev' or . = 'afar' or . = 'ajhe' or . = 'artl' or . = 'artm' or . = 'asep'
                     or . = 'coli' or . = 'comj' or . = 'cpsy' or . = 'daed' or . = 'desi' or . = 'dram'
-                    or . = 'edfp' or . = 'evco' or . = 'glep' or . = 'grey' or . = 'ijlm' or . = 'inov'
+                    or . = 'edfp' or . = 'evco' or . = 'glep' or . = 'grey' or . = 'ijlm' or . = 'itgg'
                     or . = 'isec' or . = 'jcws' or . = 'jinh' or . = 'jocn' or . = 'leon' or . = 'ling'
                     or . = 'lmj' or . = 'neco' or . = 'netn' or . = 'ntls' or . = 'octo' or . = 'opmi'
                     or . = 'pajj' or . = 'posc' or . = 'pres' or . = 'rest' or . = 'thld' or . = 'tneq'">
@@ -187,7 +191,7 @@
 
         <!-- Check VALUE of <journal-id> matches VALUE of <journal-title> -->
         <rule context="/article/front/journal-meta/journal-id">
-            <assert id="err5" test="
+            <assert test="
                     (
                     . = 'adev' and /article/front/journal-meta/journal-title-group/journal-title = 'Asian Development Review') or
                     . = 'afar' and /article/front/journal-meta/journal-title-group/journal-title = 'African Arts' or
@@ -208,7 +212,7 @@
                     . = 'glep' and /article/front/journal-meta/journal-title-group/journal-title = 'Global Environmental Politics' or
                     . = 'grey' and /article/front/journal-meta/journal-title-group/journal-title = 'Grey Room' or
                     . = 'ijlm' and /article/front/journal-meta/journal-title-group/journal-title = 'International Journal of Learning and Media' or
-                    . = 'inov' and /article/front/journal-meta/journal-title-group/journal-title = 'Innovations' or
+                    . = 'inov' and /article/front/journal-meta/journal-title-group/journal-title = 'Innovations: Technology, Governance, Globalization' or
                     . = 'isec' and /article/front/journal-meta/journal-title-group/journal-title = 'International Security' or
                     . = 'jcws' and /article/front/journal-meta/journal-title-group/journal-title = 'Journal of Cold War Studies' or
                     . = 'jinh' and /article/front/journal-meta/journal-title-group/journal-title = 'Journal of Interdisciplinary History' or
@@ -254,7 +258,7 @@
     <pattern>
         <!-- Check <journal-title> EXISTS -->
         <rule context="/article/front/journal-meta/journal-title-group">
-            <assert id="err61" test="normalize-space(journal-title)"><![CDATA[Missing <journal-title> element]]>
+            <assert test="normalize-space(journal-title)"><![CDATA[Missing <journal-title> element]]>
             </assert>
         </rule>
     </pattern>
@@ -262,21 +266,21 @@
     <pattern>
         <!-- Check <abbrev-journal-title> EXISTS -->
         <rule context="/article/front/journal-meta/journal-title-group">
-            <assert id="err6" test="normalize-space(abbrev-journal-title)"><![CDATA[Missing <abbrev-journal-title> element]]>
+            <assert test="normalize-space(abbrev-journal-title)"><![CDATA[Missing <abbrev-journal-title> element]]>
             </assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check @abbrev-type EXISTS on <abbrev-journal-title> -->
         <rule context="/article/front/journal-meta/journal-title-group/abbrev-journal-title">
-            <assert id="err7" test="@abbrev-type"><![CDATA[Missing @abbrev-type on <abbrev-journal-title> element]]>
+            <assert test="@abbrev-type"><![CDATA[Missing @abbrev-type on <abbrev-journal-title> element]]>
             </assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check VALUE of @abbrev-type -->
         <rule context="/article/front/journal-meta/journal-title-group/abbrev-journal-title/@abbrev-type">
-            <assert id="err8" test=". = 'pubmed'"><![CDATA[The value of @abbrev-type on <abbrev-journal-title> should be 'pub-med']]>
+            <assert test=". = 'pubmed'"><![CDATA[The value of @abbrev-type on <abbrev-journal-title> should be 'pub-med']]>
             </assert>
         </rule>
     </pattern>
@@ -284,14 +288,14 @@
     <pattern>
         <!-- Check <publisher-name> EXISTS -->
         <rule context="/article/front/journal-meta/publisher">
-            <assert id="err9" test="publisher-name">
+            <assert test="publisher-name">
                 <![CDATA[Missing <publisher-name> element]]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check VALUE of <publisher-name> -->
         <rule context="/article/front/journal-meta/publisher/publisher-name">
-            <assert id="err10" test="normalize-space(.) = 'MIT Press'">
+            <assert test="normalize-space(.) = 'MIT Press'">
                 <![CDATA[The <publisher-name> must be 'MIT Press' ]]></assert>
         </rule>
     </pattern>
@@ -299,41 +303,41 @@
     <pattern>
         <!-- Check <addr-line> EXISTS -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc">
-            <assert id="err11" test="addr-line"><![CDATA[Missing <addr-line> element]]></assert>
+            <assert test="addr-line"><![CDATA[Missing <addr-line> element]]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check VALUE of <addr-line> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc/addr-line">
-            <assert id="err12" test="normalize-space(.) = 'One Rogers Street, Cambridge, MA 02142-1209'">
+            <assert test="normalize-space(.) = 'One Rogers Street, Cambridge, MA 02142-1209'">
                 <![CDATA[The <addr-line must> be 'One Rogers Street, Cambridge, MA 02142-1209']]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check <country> EXISTS -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc">
-            <assert id="err13" test="country"><![CDATA[Missing <country> element]]></assert>
+            <assert test="country"><![CDATA[Missing <country> element]]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check VALUE of <country> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc/country">
-            <assert id="err14" test="normalize-space(.) = 'USA'">
+            <assert test="normalize-space(.) = 'USA'">
                 <![CDATA[The <country> must be 'USA' ]]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check <email> EXISTS -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc">
-            <assert id="err15" test="email"><![CDATA[Missing <email> element]]></assert>
+            <assert test="email"><![CDATA[Missing <email> element]]></assert>
         </rule>
     </pattern>
     <pattern>
         <!-- Check VALUE of <email> -->
         <rule context="/article/front/journal-meta/publisher/publisher-loc/email">
-            <assert id="err16" test="normalize-space(.) = 'journals-info&#x0040;mit.edu'">
+            <assert test="normalize-space(.) = 'journals-info&#x0040;mit.edu'">
                 <![CDATA[The email must be 'journals-info&#x0040;mit.edu' ]]></assert>
-            <assert id="err17" test="@xlink:href = 'mailto:journals-info@mit.edu'"><![CDATA[ The @xlink:href must be 'mailto:journals-info@mit.edu']]>
+            <assert test="@xlink:href = 'mailto:journals-info@mit.edu'"><![CDATA[ The @xlink:href must be 'mailto:journals-info@mit.edu']]>
             </assert>
         </rule>
     </pattern>
@@ -343,49 +347,49 @@
     <pattern>
         <!-- Check NUMBER of <article-id> is correct and holds the correct VALUE -->
         <rule context="/article/front/article-meta">
-            <assert id="err18" test="count(article-id) = 2"><![CDATA[You need to have two article-id elements]]></assert>
+            <assert test="count(article-id) = 2"><![CDATA[You need to have two article-id elements]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check VALUE of @pub-type correct on <pub-date> for print/online journals -->
         <rule context="/article/front/article-meta/article-id">
-            <assert id="err1v8" test="(count(/article/front/article-meta/article-id/@pub-id-type) = 2 and (/article/front/article-meta/article-id/@pub-id-type = 'doi' and /article/front/article-meta/article-id/@pub-id-type = 'publisher-id'))"><![CDATA[Incorrect @article-id attributes on <article-id>. One must be '@pub-id-type = "publisher-id"' and the other must be '@pub-id-type = "doi"']]></assert>
+            <assert test="(count(/article/front/article-meta/article-id/@pub-id-type) = 2 and (/article/front/article-meta/article-id/@pub-id-type = 'doi' and /article/front/article-meta/article-id/@pub-id-type = 'publisher-id'))"><![CDATA[Incorrect @article-id attributes on <article-id>. One must be '@pub-id-type = "publisher-id"' and the other must be '@pub-id-type = "doi"']]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check <article-id> is formatted correctly -->
         <rule context="/article/front/article-meta/article-id">
-            <assert id="err202" test="matches(., '[a-z]{3,4}_[a-z]_[0-9]{1,6}')"><![CDATA[Incorrectly formatted <article-id>. <article-id> should be formatted as follows: [journal-id]_[article type]_[id] ]. The id MUST be all lower case.]]></assert>
+            <assert test="matches(., '[a-z]{3,4}_[a-z]_[0-9]{1,6}')"><![CDATA[Incorrectly formatted <article-id>. <article-id> should be formatted as follows: [journal-id]_[article type]_[id] ]. The id MUST be all lower case.]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- <title-group> EXISTS -->
         <rule context="/article/front/article-meta/title-group">
-            <report id="err2x1" test="not(@article-type = 'book-review') and not(article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. ]]></report>
+            <report test="not(@article-type = 'book-review') and not(article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. ]]></report>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check <subtitle> DOES NOT EXIST-->
         <rule context="/article/front/article-meta/title-group">
-            <report id="err467" test="subtitle"><![CDATA[Do not use <subtitle>, include the full title of the article in article-title.]]></report>
+            <report test="subtitle"><![CDATA[Do not use <subtitle>, include the full title of the article in article-title.]]></report>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check <pub-date> EXISTS -->
         <rule context="/article/front/article-meta">
-            <assert id="err26" test="pub-date"><![CDATA[Missing <pub-date> element]]></assert>
+            <assert test="pub-date"><![CDATA[Missing <pub-date> element]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check VALUE of @pub-type is correct on e-only journals -->
         <rule context="/article/front/article-meta/pub-date">
-            <report id="err2d6" test="
+            <report test="
                     @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/><![CDATA[ is online only and the value of '@pub-type' on <pub-date> should be 'epub', not ']]><value-of select="/article/front/article-meta/pub-date/@pub-type"/>
@@ -397,7 +401,7 @@
     <pattern>
         <!-- Check only 1 <pub-date> element on e-only journals  -->
         <rule context="/article/front/article-meta/pub-date">
-            <report id="err2df6" test="
+            <report test="
                     not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/><![CDATA[ is online only and should include 1 <pub-date> element with '@pub-type="epub"'.]]>
@@ -408,7 +412,7 @@
     <pattern>
         <!-- Check 2 <pub-date> elements on print/online journals -->
         <rule context="/article/front/article-meta/pub-date">
-            <report id="err22df6" test="
+            <report test="
                     not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres'])
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/><![CDATA[ is not online only and should include 2 <pub-date> elements. One with '@pub-type="epub" and one with '@pub-type="ppub"'.]]>
@@ -419,7 +423,7 @@
     <pattern>
         <!-- Check VALUE of @pub-type is correct on print/online journals -->
         <rule context="/article/front/article-meta/pub-date">
-            <report id="err1vd8" test="(count(/article/front/article-meta/pub-date) = 2 and not(/article/front/article-meta/pub-date/@pub-type = 'epub' and /article/front/article-meta/pub-date/@pub-type = 'ppub'))"><![CDATA[Two <pub-date> elements found. One should have '@pub-type="epub" and one with '@pub-type="ppub"']]></report>
+            <report test="(count(/article/front/article-meta/pub-date) = 2 and not(/article/front/article-meta/pub-date/@pub-type = 'epub' and /article/front/article-meta/pub-date/@pub-type = 'ppub'))"><![CDATA[Two <pub-date> elements found. One should have '@pub-type="epub" and one with '@pub-type="ppub"']]></report>
         </rule>
     </pattern>
 
@@ -446,18 +450,24 @@
         </rule>
     </pattern>
 
-
+    <pattern>
+        <!-- Check <permissions> EXISTS -->
+        <rule context="/article/front/article-meta">
+            <assert test="permissions"><![CDATA[Missing <permissions> element]]></assert>
+        </rule>
+    </pattern>
+    
     <pattern>
         <!-- Check <copyright-statement> EXISTS -->
         <rule context="/article/front/article-meta/permissions">
-            <assert id="err288" test="copyright-statement"><![CDATA[Missing <copyright-statement> element]]></assert>
+            <assert test="copyright-statement"><![CDATA[Missing <copyright-statement> element]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check <copyright-holder> EXISTS -->
         <rule context="/article/front/article-meta/permissions">
-            <assert id="err289" test="copyright-holder"><![CDATA[Missing <copyright-holder> element]]></assert>
+            <assert test="copyright-holder"><![CDATA[Missing <copyright-holder> element]]></assert>
         </rule>
     </pattern>
 
@@ -465,14 +475,14 @@
     <pattern>
         <!-- Check <copyright-year> EXISTS -->
         <rule context="/article/front/article-meta/permissions">
-            <assert id="err281" test="copyright-year"><![CDATA[Missing <copyright-year> element]]></assert>
+            <assert test="copyright-year"><![CDATA[Missing <copyright-year> element]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check <license> and <license-p> EXIST (OA only) -->
         <rule context="/article/front/article-meta/permissions">
-            <assert id="err2f81" test="
+            <assert test="
                     ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev']) and license and license/license-p)
                     or
                     not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev'])">
@@ -483,7 +493,7 @@
     <pattern>
         <!-- Check VALUE of @license-type @xlink:href on <license> (OA only) -->
         <rule context="/article/front/article-meta/permissions/license">
-            <assert id="err2df81" test="@license-type = 'open-access' and @xlink:href = 'https://creativecommons.org/licenses/by/4.0/'">
+            <assert test="@license-type = 'open-access' and @xlink:href = 'https://creativecommons.org/licenses/by/4.0/'">
                 <![CDATA[If this is an OA article, the <license> element should include @license-type="open-access" and @xlink:href="https://creativecommons.org/licenses/by/4.0/". Note, it should not include @license-type="free-registered"']]></assert>
         </rule>
     </pattern>
@@ -584,30 +594,47 @@
     <!-- Check <self-uri> EXISTS -->
     <pattern>
         <rule context="/article/front/article-meta">
-            <assert id="err29" test="self-uri"><![CDATA[Missing <self-uri> element]]></assert>
+            <assert test="self-uri"><![CDATA[Missing <self-uri> element]]></assert>
         </rule>
     </pattern>
 
+    <!-- Check VALUE of @xlink:href on <self-uri> -->
+    <pattern>
+        <rule context="/article/front/article-meta/self-uri/@xlink:href">
+            <assert test="matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf')">
+                <![CDATA[Incorrectly formatted value on <self-uri> attribute @xlink:href. The attribute value must must be the name of the PDF or ePub file in lower case. It should follow the following pattern: [a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf]]></assert>
+        </rule>
+    </pattern>
+
+    <!-- Check VALUE of @xlink:href on <related-article> does not point to self -->
+    <pattern>
+        <let name="article_id" value="/article/front[1]/article-meta[1]/article-id[1]"/>
+        <rule context="/article/front/article-meta/related-article">
+            <report test="starts-with(@xlink:href, $article_id)"><![CDATA[--$article_id]]><value-of select="$article_id"/></report>
+        </rule>
+    </pattern>
+    
     <!-- Check <abstract> DOES NOT contain <title> -->
     <pattern>
         <rule context="/article/front/article-meta/abstract">
-            <report id="err30" test="title"><![CDATA[Remove <title> from abstract element.]]></report>
+            <report test="title"><![CDATA[Remove <title> from abstract element.]]></report>
         </rule>
     </pattern>
 
     <!-- Check <kwd> are seperated by <x>, <x> -->
+    <let name="kwd_count" value="count(kwd)"/>
+    <let name="x_count" value="count(x)"/>
     <pattern>
         <rule context="/article/front/article-meta/kwd-group">
-            <let name="kwd_count" value="count(kwd)"/>
-            <let name="x_count" value="count(x)"/>
-            <report id="err31" test="not($kwd_count = ($x_count + 1))"><![CDATA[<keywords should be formatted with <x>, <x> (<kwd>...</kwd><x>, </x>) ]]></report>
+            
+            <report test="not($kwd_count = ($x_count + 1))"><![CDATA[<keywords should be formatted with <x>, <x> (<kwd>...</kwd><x>, </x>) ]]></report>
         </rule>
     </pattern>
 
     <!-- Check <heading> DOES NOT EXIST -->
     <pattern>
         <rule context="/article/front/article-meta/article-categories/subj-group">
-            <report id="err312" test="subject"><![CDATA[This article includes a subject element inside article-categories/subj-group, but subject (used for TOC category heads) should be included in the issue xml file.]]></report>
+            <report test="subject"><![CDATA[This article includes a subject element inside article-categories/subj-group, but subject (used for TOC category heads) should be included in the issue xml file.]]></report>
         </rule>
     </pattern>
 
@@ -617,14 +644,14 @@
     <pattern>
         <!-- Check that the <contributor> uses <string-name>, not <name> -->
         <rule context="/article/front/article-meta/contrib-group/contrib">
-            <report id="err25" test="name"><![CDATA[The contib block uses <name>  when it should use  <string-name>]]></report>
+            <report test="name"><![CDATA[The contib block uses <name>  when it should use  <string-name>]]></report>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check VALUE <contrib-type> -->
         <rule context="/article/front/article-meta/contrib-group/contrib">
-            <assert id="err2e5" test="
+            <assert test="
                     @contrib-type = 'abstractor' or @contrib-type = 'assoc-editor' or @contrib-type = 'author' or @contrib-type = 'chair' or
                     @contrib-type = 'collaborator' or @contrib-type = 'contributing-editor' or @contrib-type = 'corresp-editor' or
                     @contrib-type = 'editor' or @contrib-type = 'guest-editor' or @contrib-type = 'illustrator' or @contrib-type = 'moderator' or
@@ -649,6 +676,16 @@
         </rule>
     </pattern>
 
+
+    <pattern>
+        <!-- Check VALUE of <aff> is not too long -->
+        <rule context="/article/front/article-meta/contrib-group/contrib">
+            <let name="aff_count" value="string-length(aff)"/>
+            <report test="string-length(aff) &gt; 60"><![CDATA[Affiliation longer than 60 characters, consider changing to <bio>]]><value-of select="$aff_count"/></report>
+        </rule>
+    </pattern>
+    
+    
     <pattern>
         <!-- Check VALUE of @ref-type on <xref> -->
         <rule context="/article/front/article-meta/contrib-group/contrib/xref">
@@ -659,14 +696,14 @@
     <pattern>
         <!-- Check corresponding author (Part 1) -->
         <rule context="/article/front/article-meta/contrib-group/contrib/xref">
-            <report test="not(../@corresp = 'yes') and @ref-type = 'corresp'"><![CDATA[<contrib> element includes '<xref rid="cor1" ref-type="corresp">*</xref>', but the <contib> does not include an @corresp='yes'. ]]></report>
+            <report test="not(../@corresp = 'yes') and @ref-type = 'corresp'"><![CDATA[<contrib> element includes '<xref rref-type="corresp">*</xref>', but the <contib> does not include an @corresp='yes'. ]]></report>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check corresponding author (Part 2) -->
         <rule context="/article/front/article-meta/contrib-group/contrib/@corresp">
-            <assert test=". = 'yes' and ../xref/@ref-type = 'corresp'"><![CDATA[<contrib> element includes a @corresp='yes' but not '<xref rid="cor1" ref-type="corresp">*</xref>'.]]></assert>
+            <assert test=". = 'yes' and ../xref/@ref-type = 'corresp'"><![CDATA[<contrib> element includes a @corresp='yes' but not '<xref rref-type="corresp">*</xref>'.]]></assert>
         </rule>
     </pattern>
 
@@ -680,7 +717,7 @@
     <!-- Check VALUE of <corresp> -->
     <pattern>
         <rule context="/article/front/article-meta/author-notes/corresp">
-            <assert test="label and matches(., 'Corresponding author:') and email"><![CDATA[Incorrect formatting of <corresp> element. Should be formatted as: '<corresp id="cor1"><label>*</label>Corresponding author: <email xlink:href="mailto:...">...</email>.</corresp>]]></assert>
+            <assert test="label and matches(., 'Corresponding author:') and email"><![CDATA[Incorrect formatting of <corresp> element. Should be formatted as: '<corresp id="cor1"> &#x002A;Corresponding author.</corresp>]]></assert>
         </rule>
     </pattern>
 
@@ -714,7 +751,14 @@
             <assert test="source"><![CDATA[<product> element found without <source>. The title of the item being reviewed should be placed inside <source> within the <product> element.]]></assert>
         </rule>
     </pattern>
-
+    
+    <pattern>
+        <!-- Check <source> is first elemt in <product> -->
+        <rule context="/article/front/article-meta/product">
+            <assert test="*[1]= source"><![CDATA[<source> incorrectly placed inside <product>. <source> should be the first element inside <product>]]></assert>
+        </rule>
+    </pattern>
+    
     <pattern>
         <!-- If a book review includes <article-title>, the title should not be the same as <source> -->
         <rule context="/article/front/article-meta/title-group/article-title">
@@ -741,7 +785,7 @@
 
     <pattern>
         <!-- ALERT user to empty <institution-id> -->
-        <rule context="/article/front/article-meta/funding-group/award-group/funding-source/institution-wrap/institution-d">
+        <rule context="/article/front/article-meta/funding-group/award-group/funding-source/institution-wrap/institution-id">
             <report test="normalize-space(.) = ''"><![CDATA[Empty <institution-id> element]]></report>
         </rule>
     </pattern>
@@ -751,14 +795,14 @@
     <pattern>
         <!-- Check @publication-type EXISTS on <mixed-citation> -->
         <rule context="/article/back/ref-list/ref/mixed-citation">
-            <assert id="err2hfe5" test="@publication-type"><![CDATA[The <mixed-citation> element must have an @publication-type attribute]]></assert>
+            <assert test="@publication-type"><![CDATA[The <mixed-citation> element must have an @publication-type attribute]]></assert>
         </rule>
     </pattern>
 
     <pattern>
         <!-- Check VALUE of @publication-type -->
-        <rule context="/article/back/ref-list/ref/mixed-citation">
-            <assert id="err2fe5" test="
+        <rule context="/article/back/ref-list/ref/mixed-citation/@publication-type">
+            <assert test="
                     @publication-type = 'book' or @publication-type = 'confproc' or
                     @publication-type = 'journal' or @publication-type = 'paper' or
                     @publication-type = 'report' or @publication-type = 'thesis' or
@@ -782,7 +826,7 @@
     <pattern>
         <!-- Check tables are HTML, not OASIS -->
         <rule context="//oasis:table">
-            <report id="err3v2" test=".">
+            <report test=".">
                 <![CDATA[OASIS table found. Use HTML tables, not OASIS.]]>
             </report>
         </rule>
