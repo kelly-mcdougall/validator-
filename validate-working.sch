@@ -212,7 +212,7 @@
                     . = 'glep' and /article/front/journal-meta/journal-title-group/journal-title = 'Global Environmental Politics' or
                     . = 'grey' and /article/front/journal-meta/journal-title-group/journal-title = 'Grey Room' or
                     . = 'ijlm' and /article/front/journal-meta/journal-title-group/journal-title = 'International Journal of Learning and Media' or
-                    . = 'inov' and /article/front/journal-meta/journal-title-group/journal-title = 'Innovations: Technology, Governance, Globalization' or
+                    . = 'itgg' and /article/front/journal-meta/journal-title-group/journal-title = 'Innovations: Technology, Governance, Globalization' or
                     . = 'isec' and /article/front/journal-meta/journal-title-group/journal-title = 'International Security' or
                     . = 'jcws' and /article/front/journal-meta/journal-title-group/journal-title = 'Journal of Cold War Studies' or
                     . = 'jinh' and /article/front/journal-meta/journal-title-group/journal-title = 'Journal of Interdisciplinary History' or
@@ -601,7 +601,7 @@
     <!-- Check VALUE of @xlink:href on <self-uri> -->
     <pattern>
         <rule context="/article/front/article-meta/self-uri/@xlink:href">
-            <assert test="matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf')">
+            <assert test="matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf') or matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.epub')">
                 <![CDATA[Incorrectly formatted value on <self-uri> attribute @xlink:href. The attribute value must must be the name of the PDF or ePub file in lower case. It should follow the following pattern: [a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf]]></assert>
         </rule>
     </pattern>
@@ -610,7 +610,7 @@
     <pattern>
         <let name="article_id" value="/article/front[1]/article-meta[1]/article-id[1]"/>
         <rule context="/article/front/article-meta/related-article">
-            <report test="starts-with(@xlink:href, $article_id)"><![CDATA[--$article_id]]><value-of select="$article_id"/></report>
+            <report test="starts-with(@xlink:href, $article_id)"><![CDATA[<related-article> element seems to point to this article. <related-article> element should be used to point to other/related content.]]></report>
         </rule>
     </pattern>
     
@@ -676,15 +676,13 @@
         </rule>
     </pattern>
 
-
     <pattern>
         <!-- Check VALUE of <aff> is not too long -->
-        <rule context="/article/front/article-meta/contrib-group/contrib">
-            <let name="aff_count" value="string-length(aff)"/>
-            <report test="string-length(aff) &gt; 60"><![CDATA[Affiliation longer than 60 characters, consider changing to <bio>]]><value-of select="$aff_count"/></report>
+        <rule context="//aff">
+            <let name="aff_count" value="string-length(//aff)"/>
+            <report test="string-length(//aff) &gt; 60"><![CDATA[Affiliation longer than 60 characters, consider changing to <bio>]]><value-of select="$aff_count"/></report>
         </rule>
     </pattern>
-    
     
     <pattern>
         <!-- Check VALUE of @ref-type on <xref> -->
