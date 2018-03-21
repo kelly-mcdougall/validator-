@@ -802,7 +802,7 @@
         <rule context="/article/back/ref-list/ref/mixed-citation/@publication-type">
             <assert test="
                     . = 'book' or . = 'confproc' or
-                    . = 'journal' or @publication-type = 'paper' or
+                    . = 'journal' or . = 'paper' or
                     . = 'report' or . = 'thesis' or
                     . = 'letter' or . = 'review' or
                     . = 'patent' or . = 'standard' or
