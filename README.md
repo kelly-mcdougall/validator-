@@ -1,7 +1,7 @@
 # validator
 
 
-  ITLE:    MIT Press Validator                               
+  TITLE:    MIT Press Validator                               
   VERSION:  1.1                                               
   DATE:     March 2018                                        
   
