@@ -1,14 +1,10 @@
 # validator
 
 
- ============================================================= 
-  TITLE:    MIT Press Validator                               
+  ITLE:    MIT Press Validator                               
   VERSION:  1.1                                               
   DATE:     March 2018                                        
-                                                               
- ============================================================= 
- ============================================================= 
-                             SECTIONS                            
+  
  1. HEADER METADATA                                            
     - Check @article-type EXISTS on the <article>
     - Check VALUE of @article-type is among confirmed values
@@ -93,12 +89,9 @@
     
  9. TABLES                                        
     - Check tables are HTML, not OASIS
- ============================================================= 
- ============================================================= 
  
   INFO: Full MIT Press XML Tagging guidelines can be found at 
   http://bit.ly/2oEXilJ. Questions should be directed to 
   kmcdouga@mit.edu.                                      
-                                                               
- ============================================================= 
+
 
