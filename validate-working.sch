@@ -773,8 +773,8 @@
         <!-- Check VALUE of <aff> is not too long -->
         <rule context="//aff">
             <let name="aff_count" value="string-length(.)"/>
-            <report test="string-length(.) &gt; 60"
-                ><![CDATA[Affiliation longer than 60 characters, consider changing to <bio>. (See 1.10 Affiliations)]]><value-of
+            <report test="string-length(.) &gt; 300"
+                ><![CDATA[Affiliation longer than 300 characters, consider changing to <bio>. (See 1.10 Affiliations)]]><value-of
                     select="$aff_count"/></report>
         </rule>
     </pattern>
