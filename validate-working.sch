@@ -482,9 +482,8 @@
     <pattern>
         <!-- Check <volume> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/volume">
-            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"
-                ><![CDATA[Omit <volume> element from Just Accepted and Early Access articles. If this isn't JA
-                or EA it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>). (See 1.18 Volume/Issue)]]></assert>
+            <assert test="matches(., '[0-9]{1,2}') and not(. = '0') and not(. = '00')"
+                ><![CDATA[Omit <volume> element from Just Accepted and Early Access articles.(See 1.18 Volume/Issue)]]></assert>
         </rule>
     </pattern>
 
@@ -492,10 +491,8 @@
     <pattern>
         <!-- Check <issue> DOES NOT EXIST on Just Accepted or Early Access articles -->
         <rule context="/article/front/article-meta/issue">
-            <assert test="matches(., '[0-9]{2}') and not(. = '0') and not(. = '00')"
-                ><![CDATA[Omit <issue> element from Just Accepted and Early Access articles. If this isn't JA
-                or EA it might be that you need to add a leading zero to the number (i.e. <issue>01</issue>).
-                (See 1.18 Volume/Issue)]]></assert>
+            <assert test="matches(., '[0-9]{1,2}') and not(. = '0') and not(. = '00')"
+                ><![CDATA[Omit <issue> element from Just Accepted and Early Access articles. (See 1.18 Volume/Issue)]]></assert>
         </rule>
     </pattern>
 
