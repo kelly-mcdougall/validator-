@@ -417,7 +417,7 @@
     <pattern>
         <!-- Check <pub-date> EXISTS -->
         <rule context="/article/front/article-meta">
-            <report test="not(pub-date) and volume"><![CDATA[Missing <pub-date> element. (See 1.17 Pub Date)]]></report>
+            <report test="not(pub-date) and (volume or issue-part)"><![CDATA[Missing <pub-date> element. (See 1.17 Pub Date)]]></report>
         </rule>
     </pattern>
 
