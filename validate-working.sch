@@ -183,12 +183,13 @@
                     or . = 'edfp' or . = 'evco' or . = 'glep' or . = 'grey' or . = 'ijlm' or . = 'itgg'
                     or . = 'isec' or . = 'jcws' or . = 'jinh' or . = 'jocn' or . = 'leon' or . = 'ling'
                     or . = 'lmj' or . = 'neco' or . = 'netn' or . = 'ntls' or . = 'octo' or . = 'opmi'
-                    or . = 'pajj' or . = 'posc' or . = 'pres' or . = 'rest' or . = 'thld' or . = 'tneq'">
+                    or . = 'pajj' or . = 'posc' or . = 'pres' or . = 'rest' or . = 'thld' or . = 'tneq' 
+                    or . = 'tacl' or . = 'dint'">
                 <![CDATA[Invalid <journal-id>. <journal-id> must be one of the following values: 
                 'adev', 'afar', 'ajhe', 'artl', 'artm', 'asep', 'coli', 'comj', 'cpsy', 'daed', 
                 'desi', 'dram', 'edfp', 'evco', 'glep', 'grey', 'ijlm', 'inov', 'isec', 'jcws', 
                 'jinh', 'jocn', 'leon', 'ling', 'lmj', 'neco', 'netn', 'ntls', 'octo', 'opmi', 
-                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq'. (See 1.3 Journal IDs)]]>
+                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq', 'tacl', 'dint'. (See 1.3 Journal IDs)]]>
             </assert>
         </rule>
     </pattern>
@@ -237,7 +238,9 @@
                     . = 'pres' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Teleoperators and Virtual Environments' or
                     . = 'rest' and /article/front/journal-meta/journal-title-group/journal-title = 'Review of Economics and Statistics' or
                     . = 'thld' and /article/front/journal-meta/journal-title-group/journal-title = 'Thresholds' or
-                    . = 'tneq' and /article/front/journal-meta/journal-title-group/journal-title = 'The New England Quarterly'
+                    . = 'tneq' and /article/front/journal-meta/journal-title-group/journal-title = 'The New England Quarterly' or
+                    . = 'tacl' and /article/front/journal-meta/journal-title-group/journal-title = 'Transactions of the Association for Computational Linguistics' or
+                    . = 'dint' and /article/front/journal-meta/journal-title-group/journal-title = 'Data Intelligence'
                     ">
                 <![CDATA[journal-id and journal-title do not match. journal-id is ']]><value-of
                     select="/article/front/journal-meta/journal-id"
@@ -252,9 +255,9 @@
         <rule context="/article/front/journal-meta">
             <assert
                 test="
-                    (count(issn) = 1 and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres'])
+                (count(issn) = 1 and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint'])
                     or
-                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres']))
+                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl']))
                     
                     "><![CDATA[Incorrect number of <issn> elements. If this is an e-only journal it should
                 only have one <issn> element with an '@pub-type="epub"'. If this is a print and online 
@@ -300,7 +303,7 @@
         <!-- Check VALUE of @abbrev-type -->
         <rule context="/article/front/journal-meta/journal-title-group/abbrev-journal-title/@abbrev-type">
             <assert test=". = 'pubmed'"><![CDATA[The value of @abbrev-type on <abbrev-journal-title> should be
-                'pub-med'. (See 1.4 Journal Titles)]]>
+                'pubmed'. (See 1.4 Journal Titles)]]>
             </assert>
         </rule>
     </pattern>
@@ -399,7 +402,7 @@
     <pattern>
         <!-- <title-group> EXISTS -->
         <rule context="/article/front/article-meta">
-            <report test="not(@article-type = 'book-review') and not(title-group/article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. (See 1.8 Article
+            <report test="not(/article/@article-type = 'book-review') and not(title-group/article-title)"><![CDATA[This is not a book-review, but it's missing an <article-title>. (See 1.8 Article
                 Title)]]></report>
         </rule>
     </pattern>
@@ -415,7 +418,7 @@
     <pattern>
         <!-- Check <pub-date> EXISTS -->
         <rule context="/article/front/article-meta">
-            <assert test="pub-date"><![CDATA[Missing <pub-date> element. (See 1.17 Pub Date)]]></assert>
+            <report test="not(pub-date) and (volume or issue-part)"><![CDATA[Missing <pub-date> element. (See 1.17 Pub Date)]]></report>
         </rule>
     </pattern>
 
@@ -424,7 +427,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                    @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres']
+                @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'dint']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                     /><![CDATA[ is online only and the value of '@pub-type' on <pub-date> should be 'epub', not ']]><value-of
@@ -439,7 +442,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                    not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres']
+                not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'pres'  or journal-id = 'dint']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is online only and should include 1 <pub-date> element with '@pub-type="epub"'. (See 1.17 Pub Date)]]>
@@ -452,7 +455,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                    not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres'])
+                not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'pres'  or journal-id = 'dint'])
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is not online only and should include 2 <pub-date> elements. One with '@pub-type="epub" and one with '@pub-type="ppub"'. (See 1.17 Pub Date)]]>
@@ -538,9 +541,9 @@
         <rule context="/article/front/article-meta/permissions">
             <assert
                 test="
-                    ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev']) and license and license/license-p)
+                    ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl']) and license and license/license-p)
                     or
-                    not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev'])">
+                    not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl'])">
                 <![CDATA[This is an OA article and should include a <license> and <license-p> element. (See 1.21 Permissions)]]></assert>
         </rule>
     </pattern>
@@ -589,7 +592,7 @@
         <rule context="/article/front/article-meta/permissions">
             <report
                 test="
-                    ((/article/front/journal-meta/journal-id = 'coli')
+                    ((/article/front/journal-meta[journal-id = 'coli' or journal-id = 'tacl'])
                     and
                     not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
                 <![CDATA[<copyright-holder> for]]>
@@ -607,10 +610,10 @@
                 test="
                     ((/article/front/journal-meta/journal-id = 'adev')
                     and
-                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Asian Development Bank and Asian Development Bank Institute')))">
+                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-holder), 'Asian Development Bank and Asian Development Bank Institute.  Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')))">
                 <![CDATA[<copyright-holder> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "Asian Development Bank and Asian Development Bank Institute". (See 1.21 Permissions)]]>
+                <![CDATA[ should be "Asian Development Bank and Asian Development Bank Institute.  Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license". (See 1.21 Permissions)]]>
             </report>
         </rule>
     </pattern>
@@ -636,7 +639,7 @@
         <rule context="/article/front/article-meta/permissions">
             <report
                 test="
-                    ((/article/front/journal-meta/journal-id = 'coli')
+                    ((/article/front/journal-meta[journal-id = 'coli' or journal-id = 'tacl'])
                     and
                     not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
                 <![CDATA[<copyright-statement> for]]>
@@ -653,10 +656,10 @@
                 test="
                     ((/article/front/journal-meta/journal-id = 'adev')
                     and
-                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Asian Development Bank and Asian Development Bank Institute')))">
+                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Asian Development Bank and Asian Development Bank Institute.  Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "© [copyright year] Asian Development Bank and Asian Development Bank Institute" ]]>
+                <![CDATA[ should be "© [copyright year] Asian Development Bank and Asian Development Bank Institute.  Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
             </report>
         </rule>
     </pattern>
@@ -751,7 +754,7 @@
     <pattern>
         <!-- Check VALUE of <contrib-id> -->
         <rule context="/article/front/article-meta/contrib-group/contrib/contrib-id">
-            <assert test="matches(., 'http://orcid.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[X0-9]{1}')"
+            <assert test="matches(., 'https://orcid.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[X0-9]{1}')"
                 ><![CDATA[ORCID not properly formatted. Should follow:
                 'http://orcid.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[X0-9]{1}'. (See 1.14 ORCID)]]></assert>
         </rule>
@@ -770,8 +773,8 @@
         <!-- Check VALUE of <aff> is not too long -->
         <rule context="//aff">
             <let name="aff_count" value="string-length(.)"/>
-            <report test="string-length(.) &gt; 300"
-                ><![CDATA[Affiliation longer than 300 characters, consider changing to <bio>. (See 1.10 Affiliations)]]><value-of
+            <report test="string-length(.) &gt; 150"
+                ><![CDATA[Affiliation longer than 150 characters, consider changing to <bio>. (See 1.10 Affiliations)]]><value-of
                     select="$aff_count"/></report>
         </rule>
     </pattern>
@@ -789,7 +792,7 @@
         <!-- Check corresponding author (Part 1) -->
         <rule context="/article/front/article-meta/contrib-group/contrib/xref">
             <report test="not(../@corresp = 'yes') and @ref-type = 'corresp'"
-                ><![CDATA[<contrib> element includes '<xref rref-type="corresp">*</xref>', but the <contib> does not include an @corresp='yes'. (See 1.11 Author notes)]]></report>
+                ><![CDATA[<contrib> element includes '<xref ref-type="corresp">*</xref>', but the <contib> does not include an @corresp='yes'. (See 1.11 Author notes)]]></report>
         </rule>
     </pattern>
 
@@ -813,8 +816,7 @@
     <pattern>
         <rule context="/article/front/article-meta/author-notes/corresp">
             <assert test="label and matches(., 'Corresponding author:') and email"
-                ><![CDATA[Incorrect formatting of <corresp> element. Should be formatted as: '<corresp
-                id="cor1"> &#x002A;Corresponding author.</corresp>. (See 1.13 Corresponding Author Information)]]></assert>
+                ><![CDATA[Incorrect formatting of <corresp> element. Should be formatted as: '<corresp id="cor1">*Corresponding author.</corresp>. (See 1.13 Corresponding Author Information)]]></assert>
         </rule>
     </pattern>
 
@@ -967,3 +969,4 @@
     </pattern>
 
 </schema>
+ 
