@@ -659,11 +659,11 @@
         <rule context="/article/front/article-meta/permissions/copyright-holder">
             <assert
                 test="((/article/front/journal-meta[journal-id = 'tacl']) 
-                and normalize-space(.) = 'Association for Computational Linguistics. Distributed under a CC-BY 4.0 license')
+                and normalize-space(.) = 'Association for Computational Linguistics. Distributed under a CC-BY 4.0 license.')
                 or not(/article/front/journal-meta[journal-id = 'tacl'])">
                 <![CDATA[<copyright-holder> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "Association for Computational Linguistics. Distributed under a CC-BY 4.0 license". (See 1.21 Permissions)]]>
+                <![CDATA[ should be "Association for Computational Linguistics. Distributed under a CC-BY 4.0 license.". (See 1.21 Permissions)]]>
             </assert>
         </rule>
     </pattern>
