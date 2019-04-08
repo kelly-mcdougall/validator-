@@ -184,12 +184,12 @@
                     or . = 'isec' or . = 'jcws' or . = 'jinh' or . = 'jocn' or . = 'leon' or . = 'ling'
                     or . = 'lmj' or . = 'neco' or . = 'netn' or . = 'ntls' or . = 'octo' or . = 'opmi'
                     or . = 'pajj' or . = 'posc' or . = 'pres' or . = 'rest' or . = 'thld' or . = 'tneq' 
-                    or . = 'tacl' or . = 'dint'">
+                    or . = 'tacl' or . = 'dint' or . = 'pvar'">
                 <![CDATA[Invalid <journal-id>. <journal-id> must be one of the following values: 
                 'adev', 'afar', 'ajhe', 'artl', 'artm', 'asep', 'coli', 'comj', 'cpsy', 'daed', 
                 'desi', 'dram', 'edfp', 'evco', 'glep', 'grey', 'ijlm', 'itgg', 'isec', 'jcws', 
                 'jinh', 'jocn', 'leon', 'ling', 'lmj', 'neco', 'netn', 'ntls', 'octo', 'opmi', 
-                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq', 'tacl', 'dint'. (See 1.3 Journal IDs)]]>
+                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq', 'tacl', 'dint', 'pvar'. (See 1.3 Journal IDs)]]>
             </assert>
         </rule>
     </pattern>
@@ -240,7 +240,8 @@
                     . = 'thld' and /article/front/journal-meta/journal-title-group/journal-title = 'Thresholds' or
                     . = 'tneq' and /article/front/journal-meta/journal-title-group/journal-title = 'The New England Quarterly' or
                     . = 'tacl' and /article/front/journal-meta/journal-title-group/journal-title = 'Transactions of the Association for Computational Linguistics' or
-                    . = 'dint' and /article/front/journal-meta/journal-title-group/journal-title = 'Data Intelligence'
+                    . = 'dint' and /article/front/journal-meta/journal-title-group/journal-title = 'Data Intelligence' or
+                    . = 'pvar' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Virtual and Augmented Reality'
                     ">
                 <![CDATA[journal-id and journal-title do not match. journal-id is ']]><value-of
                     select="/article/front/journal-meta/journal-id"
@@ -255,9 +256,9 @@
         <rule context="/article/front/journal-meta">
             <assert
                 test="
-                (count(issn) = 1 and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint'])
+                (count(issn) = 1 and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar'])
                     or
-                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl' or journal-id = 'dint']))
+                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'pvar']))
                     
                     "><![CDATA[Incorrect number of <issn> elements. If this is an e-only journal it should
                 only have one <issn> element with an '@pub-type="epub"'. If this is a print and online 
@@ -427,7 +428,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'dint' or journal-id = 'tacl']
+                @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'dint' or journal-id = 'tacl' or journal-id = 'pvar']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                     /><![CDATA[ is online only and the value of '@pub-type' on <pub-date> should be 'epub', not ']]><value-of
@@ -442,7 +443,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint']
+                not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is online only and should include 1 <pub-date> element with '@pub-type="epub"'. (See 1.17 Pub Date)]]>
@@ -455,7 +456,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint'])
+                not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar'])
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is not online only and should include 2 <pub-date> elements. One with '@pub-type="epub" and one with '@pub-type="ppub"'. (See 1.17 Pub Date)]]>
@@ -663,7 +664,7 @@
                 or not(/article/front/journal-meta[journal-id = 'tacl'])">
                 <![CDATA[<copyright-holder> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "Association for Computational Linguistics. Distributed under a CC-BY 4.0 license.". (See 1.21 Permissions)]]>
+                <![CDATA[ should be "Association for Computational Linguistics. Distributed under a CC-BY 4.0 license". (See 1.21 Permissions)]]>
             </assert>
         </rule>
     </pattern>
