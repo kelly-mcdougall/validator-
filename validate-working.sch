@@ -184,12 +184,12 @@
                     or . = 'isec' or . = 'jcws' or . = 'jinh' or . = 'jocn' or . = 'leon' or . = 'ling'
                     or . = 'lmj' or . = 'neco' or . = 'netn' or . = 'ntls' or . = 'octo' or . = 'opmi'
                     or . = 'pajj' or . = 'posc' or . = 'pres' or . = 'rest' or . = 'thld' or . = 'tneq' 
-                    or . = 'tacl' or . = 'dint' or . = 'pvar'">
+                    or . = 'tacl' or . = 'dint' or . = 'pvar' or . = 'qss' or . = 'nol'">
                 <![CDATA[Invalid <journal-id>. <journal-id> must be one of the following values: 
                 'adev', 'afar', 'ajhe', 'artl', 'artm', 'asep', 'coli', 'comj', 'cpsy', 'daed', 
                 'desi', 'dram', 'edfp', 'evco', 'glep', 'grey', 'ijlm', 'itgg', 'isec', 'jcws', 
                 'jinh', 'jocn', 'leon', 'ling', 'lmj', 'neco', 'netn', 'ntls', 'octo', 'opmi', 
-                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq', 'tacl', 'dint', 'pvar'. (See 1.3 Journal IDs)]]>
+                'pajj', 'posc', 'pres', 'rest', 'thld', 'tneq', 'tacl', 'dint', 'pvar', 'qss,', 'nol'. (See 1.3 Journal IDs)]]>
             </assert>
         </rule>
     </pattern>
@@ -239,9 +239,11 @@
                     . = 'rest' and /article/front/journal-meta/journal-title-group/journal-title = 'Review of Economics and Statistics' or
                     . = 'thld' and /article/front/journal-meta/journal-title-group/journal-title = 'Thresholds' or
                     . = 'tneq' and /article/front/journal-meta/journal-title-group/journal-title = 'The New England Quarterly' or
-                    . = 'tacl' and /article/front/journal-meta/journal-title-group/journal-title = 'Transactions of the Association for Computational Linguistics' or
+                    . = 'tacl' and normalize-space(/article/front/journal-meta/journal-title-group/journal-title) = 'Transactions of the Association for Computational Linguistics' or
                     . = 'dint' and /article/front/journal-meta/journal-title-group/journal-title = 'Data Intelligence' or
-                    . = 'pvar' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Virtual and Augmented Reality'
+                    . = 'pvar' and /article/front/journal-meta/journal-title-group/journal-title = 'PRESENCE: Virtual and Augmented Reality' or
+                    . = 'qss' and /article/front/journal-meta/journal-title-group/journal-title = 'Quantitative Science Studies' or
+                    . = 'nol' and /article/front/journal-meta/journal-title-group/journal-title = 'Neurobiology of Language'
                     ">
                 <![CDATA[journal-id and journal-title do not match. journal-id is ']]><value-of
                     select="/article/front/journal-meta/journal-id"
@@ -256,9 +258,9 @@
         <rule context="/article/front/journal-meta">
             <assert
                 test="
-                (count(issn) = 1 and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar'])
+                (count(issn) = 1 and /article/front/journal-meta[journal-id = 'cpsy' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar' or journal-id = 'qss' or journal-id = 'nol'])
                     or
-                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'pvar']))
+                    (count(issn) = 2 and not(/article/front/journal-meta[journal-id = 'cpsy' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'pvar' or journal-id = 'qss' or journal-id = 'nol']))
                     
                     "><![CDATA[Incorrect number of <issn> elements. If this is an e-only journal it should
                 only have one <issn> element with an '@pub-type="epub"'. If this is a print and online 
@@ -428,7 +430,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'dint' or journal-id = 'tacl' or journal-id = 'pvar']
+                @pub-type = 'ppub' and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'dint' or journal-id = 'tacl' or journal-id = 'pvar' or journal-id = 'qss' or journal-id = 'nol']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                     /><![CDATA[ is online only and the value of '@pub-type' on <pub-date> should be 'epub', not ']]><value-of
@@ -443,7 +445,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar']
+                not(count(/article/front/article-meta/pub-date) = 1) and /article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar' or journal-id = 'qss' or journal-id = 'nol']
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is online only and should include 1 <pub-date> element with '@pub-type="epub"'. (See 1.17 Pub Date)]]>
@@ -456,7 +458,7 @@
         <rule context="/article/front/article-meta/pub-date">
             <report
                 test="
-                not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar'])
+                not(count(/article/front/article-meta/pub-date) = 2) and not(/article/front/journal-meta[journal-id = 'artl' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'evco' or journal-id = 'jocn' or journal-id = 'neco' or journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'posc' or journal-id = 'pres' or journal-id = 'tacl'  or journal-id = 'dint' or journal-id = 'pvar' or journal-id = 'qss' or journal-id = 'nol'])
                     ">
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"
                 /><![CDATA[ is not online only and should include 2 <pub-date> elements. One with '@pub-type="epub" and one with '@pub-type="ppub"'. (See 1.17 Pub Date)]]>
@@ -475,12 +477,12 @@
 
 
     <pattern>
-        <!-- Check that the <month> is not a string and that it's formatted correctly-->
+        <!-- Check that the <month> is not a string and that it's formatted correctly
         <rule context="/article/front/article-meta/pub-date/month">
             <assert test="matches(., '^[0-9]{2}$')"
                 ><![CDATA[the month in <pub-date> should be an integer value, not a string value, and should
                 be formatted as '01', '02'... (See 1.17 Pub Date)]]></assert>
-        </rule>
+        </rule> -->
     </pattern>
 
     <pattern>
@@ -542,20 +544,20 @@
         <rule context="/article/front/article-meta/permissions">
             <assert
                 test="
-                ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg']) and license and license/license-p)
+                ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol']) and license and license/license-p)
                     or
-                    not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg'])">
+                    not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'adev' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol'])">
                 <![CDATA[This is an OA article and should include a <license> and <license-p> element. (See 1.21 Permissions)]]></assert>
         </rule>
     </pattern>
 
     <pattern>
-        <!-- Check VALUE of @license-type @xlink:href on <license> (OA only, all OA journals but adev) -->
+        <!-- Check VALUE of @license-type @xlink:href on <license> (OA only, all OA journals but adev and coli) -->
         <rule context="/article/front/article-meta/permissions/license">
             <assert
-                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg']) and @license-type = 'open-access' and @xlink:href = 'https://creativecommons.org/licenses/by/4.0/')
-                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'coli' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg'])">
-                <![CDATA[If this is an OA article, and not Asian Development Review, the <license> element should include
+                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol']) and @license-type = 'open-access' and @xlink:href = 'https://creativecommons.org/licenses/by/4.0/')
+                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol'])">
+                <![CDATA[If this is an OA article, and not Asian Development Review or Computational Linguistics, the <license> element should include
                 @license-type="open-access" and @xlink:href="https://creativecommons.org/licenses/by/4.0/".
                 Note, it should not include @license-type="free-registered"'. (See 1.21 Permissions)]]></assert>
         </rule>
@@ -572,14 +574,26 @@
                 Note, it should not include @license-type="free-registered"'. (See 1.21 Permissions)]]></assert>
         </rule>
     </pattern>
+    
+    <pattern>
+        <!-- Check VALUE of @license-type @xlink:href on <license> (OA only, coli) -->
+        <rule context="/article/front/article-meta/permissions/license">
+            <assert
+                test="((/article/front/journal-meta[journal-id = 'coli']) and @license-type = 'open-access' and @xlink:href = 'https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode')
+                or not(/article/front/journal-meta[journal-id = 'coli'])">
+                <![CDATA[If this is an OA Computational Linguistics article, the <license> element should include
+                @license-type="open-access" and @xlink:href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode".
+                Note, it should not include @license-type="free-registered"'. (See 1.21 Permissions)]]></assert>
+        </rule>
+    </pattern>
 
     <pattern>
         <!-- Check VALUE of <license> (OA only except adev, coli) -->
         <rule context="/article/front/article-meta/permissions/license/license-p">
             <assert
-                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg']) 
+                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol']) 
                 and normalize-space(.) = 'This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.')
-                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg'])">
+                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi' or journal-id = 'tacl' or journal-id = 'dint' or journal-id = 'itgg' or journal-id = 'qss' or journal-id = 'nol'])">
                 <![CDATA[<license-p> element should read 'This is an open-access article distributed under the
                 terms of the Creative Commons Attribution 4.0 International License, which permits
                 unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.' If this is not an OA article, omit <license> and <license-p>". (See 1.21 Permissions)]]>
@@ -606,27 +620,41 @@
         <rule context="/article/front/article-meta/permissions/license/license-p">
             <assert
                 test="((/article/front/journal-meta[journal-id = 'coli']) 
-                and normalize-space(.) = 'This is an open-access article distributed under the terms of the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits you to copy and redistribute in any medium or format, for non-commercial use only, provided that the original work is not remixed, transformed, or built upon, and that appropriate credit to the original source is given. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.')
+                and normalize-space(.) = 'This is an open-access article distributed under the terms of the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits you to copy and redistribute in any medium or format, for non-commercial use only, provided that the original work is not remixed, transformed, or built upon, and that appropriate credit to the original source is given. For a full description of the license, please visit https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.')
                 or not(/article/front/journal-meta[journal-id = 'coli'])">
-                <![CDATA[<license-p> element should read 'This is an open-access article distributed under the terms of the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits you to copy and redistribute in any medium or format, for non-commercial use only, provided that the original work is not remixed, transformed, or built upon, and that appropriate credit to the original source is given. For a full description of the license, please visit https://creativecommons.org/licenses/by/4.0/legalcode.' If this is not an OA article, omit <license> and <license-p>". (See 1.21 Permissions)]]>
+                <![CDATA[<license-p> element should read 'This is an open-access article distributed under the terms of the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, which permits you to copy and redistribute in any medium or format, for non-commercial use only, provided that the original work is not remixed, transformed, or built upon, and that appropriate credit to the original source is given. For a full description of the license, please visit https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.' If this is not an OA article, omit <license> and <license-p>". (See 1.21 Permissions)]]>
             </assert>
         </rule>
     </pattern>
 
     <pattern>
-        <!-- Check VALUE of <copyright-holder> (OA only: NETN, CPSY, OPMI)-->
+        <!-- Check VALUE of <copyright-holder> (OA only: NETN, OPMI, NOL)-->
         <rule context="/article/front/article-meta/permissions/copyright-holder">
             <assert
-                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi']) 
+                test="((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'opmi' or journal-id = 'nol']) 
                 and normalize-space(.) = 'Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')
-                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi'])">
+                or not(/article/front/journal-meta[journal-id = 'netn' or journal-id = 'opmi'])">
                 <![CDATA[<copyright-holder> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
                 <![CDATA[ should be "Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license". (See 1.21 Permissions)]]>
             </assert>
         </rule>
     </pattern>
-
+    
+    <pattern>
+        <!-- Check VALUE of <copyright-holder> (OA only: CPSY)-->
+        <rule context="/article/front/article-meta/permissions/copyright-holder">
+            <assert
+                test="((/article/front/journal-meta[journal-id = 'cpsy']) 
+                and normalize-space(.) = 'Computational Psychiatry, Inc. and the Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')
+                or not(/article/front/journal-meta[journal-id = 'cpsy'])">
+                <![CDATA[<copyright-holder> for]]>
+                <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
+                <![CDATA[ should be "Computational Psychiatry, Inc. and the Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license". (See 1.21 Permissions)]]>
+            </assert>
+        </rule>
+    </pattern>
+    
     <pattern>
         <!-- Check VALUE of <copyright-holder> (OA only:coli)-->
         <rule context="/article/front/article-meta/permissions/copyright-holder">
@@ -674,26 +702,42 @@
         <rule context="/article/front/article-meta/permissions/copyright-holder">
             <assert
                 test="((/article/front/journal-meta[journal-id = 'dint']) 
-                and normalize-space(.) = 'National Science Library of the Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')
+                and normalize-space(.) = 'Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license')
                 or not(/article/front/journal-meta[journal-id = 'dint'])">
                 <![CDATA[<copyright-holder> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "National Science Library of the Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license". (See 1.21 Permissions)]]>
+                <![CDATA[ should be "Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license". (See 1.21 Permissions)]]>
             </assert>
         </rule>
     </pattern>
 
     <pattern>
-        <!-- Check VALUE of <copyright-statement> (OA only: NETN, CPSY, OPMI)-->
+        <!-- Check VALUE of <copyright-statement> (OA only: NETN, OPMI)-->
         <rule context="/article/front/article-meta/permissions">
             <report
                 test="
-                    ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'cpsy' or journal-id = 'opmi'])
+                    ((/article/front/journal-meta[journal-id = 'netn' or journal-id = 'opmi'])
                     and
-                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
                 <![CDATA[ should be "© [copyright year] Massachusetts Institute of Technology Published under
+                a Creative Commons Attribution 4.0 International (CC BY 4.0) license".]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <pattern>
+        <!-- Check VALUE of <copyright-statement> (OA only: CPSY)-->
+        <rule context="/article/front/article-meta/permissions">
+            <report
+                test="
+                ((/article/front/journal-meta[journal-id = 'cpsy'])
+                and
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Computational Psychiatry, Inc. and the Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                <![CDATA[<copyright-statement> for]]>
+                <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
+                <![CDATA[ should be "© [copyright year] Computational Psychiatry, Inc. and the Massachusetts Institute of Technology Published under
                 a Creative Commons Attribution 4.0 International (CC BY 4.0) license".]]>
             </report>
         </rule>
@@ -706,7 +750,7 @@
                 test="
                     ((/article/front/journal-meta[journal-id = 'coli'])
                     and
-                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
+                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International \(CC BY-NC-ND 4.0\) license')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
                 <![CDATA[ should be "© [copyright year] Association for Computational Linguistics Published under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license" ]]>
@@ -721,7 +765,7 @@
                 test="
                     ((/article/front/journal-meta/journal-id = 'adev')
                     and
-                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Asian Development Bank and Asian Development Bank Institute. Published under a Creative Commons Attribution 3.0 International \(CC BY 3.0\) license')))">
+                    not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Asian Development Bank and Asian Development Bank Institute. Published under a Creative Commons Attribution 3.0 International \(CC BY 3.0\) license')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
                 <![CDATA[ should be "© [copyright year] Asian Development Bank and Asian Development Bank Institute.  Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
@@ -736,7 +780,7 @@
                 test="
                 ((/article/front/journal-meta[journal-id = 'tacl'])
                 and
-                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] Association for Computational Linguistics. Distributed under a CC-BY 4.0 license.')))">
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Association for Computational Linguistics. Distributed under a CC-BY 4.0 license.')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
                 <![CDATA[ should be "© [copyright year] Association for Computational Linguistics. Distributed under a CC-BY 4.0 license." ]]>
@@ -751,10 +795,25 @@
                 test="
                 ((/article/front/journal-meta[journal-id = 'dint'])
                 and
-                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 201[0-9] National Science Library of the Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                not(matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
                 <![CDATA[<copyright-statement> for]]>
                 <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
-                <![CDATA[ should be "© [copyright year] National Science Library of the Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
+                <![CDATA[ should be "© [copyright year] Chinese Academy of Sciences Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
+            </report>
+        </rule>
+    </pattern>
+    
+    <pattern>
+        <!-- Check VALUE of <copyright-statement> (OA only: qss)-->
+        <rule context="/article/front/article-meta/permissions">
+            <report
+                test="
+                ((/article/front/journal-meta[journal-id = 'qss'])
+                and
+                (matches(normalize-space(/article/front/article-meta/permissions/copyright-statement), '© 20[0-9]{2} Massachusetts Institute of Technology Published under a Creative Commons Attribution 4.0 International \(CC BY 4.0\) license')))">
+                <![CDATA[<copyright-statement> for]]>
+                <value-of select="/article/front/journal-meta/journal-title-group/journal-title"/>
+                <![CDATA[ should be "© [copyright year] [Author Name] Published under a Creative Commons Attribution 4.0 International (CC BY 4.0) license" ]]>
             </report>
         </rule>
     </pattern>
@@ -770,7 +829,7 @@
         <!-- Check VALUE of @xlink:href on <self-uri> -->
         <rule context="/article/front/article-meta/self-uri/@xlink:href">
             <assert
-                test="matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf') or matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.epub')">
+                test="matches(normalize-space(.), '[a-z]{3,4}_[a-z]{1}_[0-9]{3,6}.pdf') or matches(normalize-space(.), '[a-z]{4}_[a-z]{1}_[0-9]{3,6}.epub')">
                 <![CDATA[Incorrectly formatted value on <self-uri> attribute @xlink:href. The attribute value
                 must must be the name of the PDF or ePub file in lower case. It should follow the following pattern: [a-z]{4}_[a-z]{1}_[0-9]{3,6}.pdf. (See 1.22 Link to PDF)]]></assert>
         </rule>
@@ -1013,7 +1072,7 @@
                     "><![CDATA[Unrecognized @publication-type on <mixed-citation>. Value should be one of the following:
                 'book', 'confproc', 'journal', 'paper', 'report', 
                 'thesis', 'letter', 'review', 'patent', 'standard', 
-                'data', or 'working-paper'. Please do not use 'other'. 
+                'data', or 'working-paper' or 'other'. 
                 If you need a new @publication-type added, please email journals-tech@mit.edu so it can be added to the guidlines. (See 1.30
                 References)]]></assert>
         </rule>
